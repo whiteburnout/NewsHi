@@ -133,6 +133,7 @@ $ yarn serve
 ### 뉴스피드
 
 - 로그인
+
 <img src="./images/메인페이지.PNG"></img>
 
 
@@ -140,9 +141,6 @@ $ yarn serve
 - 비로그인
 
   > 최신순으로 등록된 기사를 보여줌
-
-
-
 <img src="./images/메인페이지2.PNG"></img>
 
 ### 포스트
