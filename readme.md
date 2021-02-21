@@ -38,7 +38,7 @@
 
 ## ⚙️ 개발환경
 
-![기술스택](C:\Users\multicampus\git\새 폴더\기술스택.PNG)
+<img src="./images/기술스택.png"></img>
 
 ## 📜개발기록
 
