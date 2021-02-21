@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newha.mapper.NewsMapper">
+
+	<insert id="insertNews" parameterType="News">
+		insert into news values(null, #{title}, #{subtitle}, #{content}, #{image_path}, #{url}, #{article_date}, #{article_bot_summary}, #{article_image_caption}, #{company});
+	</insert>
+	
+	<insert id="insertImages" parameterType="java.util.List">
+    INSERT INTO
+        news_image
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.newsNo}, #{item.news_image}, #{item.image_caption})
+    </foreach>
+	</insert>
+	
+	<insert id="insertPost" parameterType="Post">
+		insert into post values(null, #{name}, #{id});
+	</insert>
+	
+	<insert id="insertUserScrapNews" parameterType="UserScrapNews">
+		insert into user_scrap_news values(null, #{newsNo}, #{postNo}, #{userNo}, null, #{curator_summary}, 0, 0);
+	</insert>
+	
+	<insert id="insertPostTag" parameterType="PostTag">
+		insert into post_tag values(#{scrapNo}, #{tagNo});
+	</insert>
+	
+	<insert id="insertHashTag" parameterType="String">
+    INSERT INTO hashtag(name)
+        SELECT #{tag} FROM DUAL
+        WHERE NOT EXISTS 
+		(SELECT * FROM hashtag WHERE name = #{tag})
+	</insert>
+	
+	<insert id="insertUserGoodNews" parameterType="UserGoodNews">
+    INSERT INTO user_good_news(userNo, scrapNo)
+        SELECT #{userNo}, #{scrapNo} FROM DUAL
+        WHERE NOT EXISTS 
+		(SELECT * FROM user_good_news WHERE userNo = #{userNo} and scrapNo = #{scrapNo})
+	</insert>
+	
+	<select id="selectByUrl" parameterType="String" resultType="News">
+		select * from news where url like #{url};
+	</select>
+	
+	<select id="selectPostByName" parameterType="String" resultType="Post">
+		select * from post where name = #{name};
+	</select>
+	
+	<select id="selectPostByLikeName" parameterType="String" resultType="Post">
+		select * from post where name like #{name};
+	</select>
+	
+	<select id="selectPostByTag" parameterType="String" resultType="Post">
+		select * from post where postNo in(
+		select postNo from user_scrap_news where newsNo in(
+		select newsNo from news where newsNo in (
+		select newsNo from user_scrap_news where scrapNo in (
+		select scrapNo from post_tag where tagNo in (
+		select tagNo from hashtag where name like #{tag})))));
+	</select>
+	
+	<select id="selectUserById" parameterType="String" resultType="User">
+		select * from user where id = #{id};
+	</select>
+	
+	<select id="selectUserByName" parameterType="String" resultType="User">
+		select * from user where name = #{name};
+	</select>
+	
+	<select id="selectUserByUserNo" parameterType="String" resultType="User">
+		select * from user where userNo = #{userNo};
+	</select>
+	<select id="selectUserByTag" parameterType="String" resultType="User">
+		select * from user where userNo in (select userNo from user_scrap_news where scrapNo in(
+				select scrapNo from post_tag where tagNo in(
+				select tagNo from hashtag where name in(
+				select name from join_tag where userNo = #{userNo}))));
+	</select>
+	
+	<select id="selectUserScrapNewsByPostNo" parameterType="String" resultType="UserScrapNews">
+		select * from user_scrap_news where postNo = #{postNo};
+	</select>
+	
+	<select id="selectUserScrapNewsByTagName" parameterType="String" resultType="UserScrapNews">
+		select * from user_scrap_news where scrapNo in (select scrapNo from post_tag where tagNo in (
+					   select tagNo from hashtag where name = #{tagName})) order by newsNo;
+	</select>
+	
+	<select id="selectUserScrapNewsByUserNo" parameterType="String" resultType="UserScrapNews">
+		select * from user_scrap_news where userNo = #{userNo};
+	</select>
+	
+	<select id="selectUserScrapNewsByScrapNo" parameterType="String" resultType="UserScrapNews">
+		select * from user_scrap_news where scrapNo = #{scrapNo};
+	</select>
+	
+	<select id="selectUserScrapNewsByNewsNo" parameterType="String" resultType="UserScrapNews">
+		select * from user_scrap_news where newsNo = #{newsNo} order by like_cnt desc limit 30;
+	</select>
+	
+	<select id="selectNewsByScrapNo" parameterType="String" resultType="News">
+		select * from news where newsNo = (select newsNo from user_scrap_news where scrapNo = #{scrapNo});
+	</select>
+	
+	<select id="selectNewsByUserNo" parameterType="String" resultType="News">
+		select * from news where newsNo in (select newsNo from user_scrap_news where userNo = #{userNo});
+	</select>
+	
+	<select id="selectNewsByNewsNo" parameterType="String" resultType="News">
+		select * from news where newsNo = #{newsNo} );
+	</select>
+	
+	<select id="selectAllNews" resultType="News">
+		select * from news order by newsNo desc;
+	</select>
+	
+	<select id="selectHashTagByName" parameterType="String" resultType="HashTag">
+		select * from hashtag where name = #{name};
+	</select>
+	
+	<select id="selectPostById" parameterType="String" resultType="Post">
+		select * from post where id = #{id};
+	</select>
+	
+	<select id="selectLikeNews" parameterType="UserGoodNews" resultType="UserGoodNews">
+		select * from user_good_news where userNo = #{userNo} and scrapNo = #{scrapNo};
+	</select>
+	
+	<select id="selectDisLikeNews" parameterType="UserGoodNews" resultType="UserGoodNews">
+		select * from user_good_news where userNo = #{userNo} and scrapNo = #{scrapNo};
+	</select>
+	
+	<select id="selectUserGoodNewsByUserNo" parameterType="String" resultType="UserGoodNews">
+		select * from user_good_news where userNo = #{userNo};
+	</select>
+	
+	<select id="selectNewImageByNewsNo" parameterType="String" resultType="NewsImage">
+		select * from news_image where newsNo = #{newsNo};
+	</select>
+	
+	<select id="selectNewsByTagName" parameterType="String" resultType="News">
+		select * from news where newsNo in (select newsNo from user_scrap_news where scrapNo in (
+				select scrapNo from post_tag where tagNo in (
+				select tagNo from hashtag where name = #{tagName})));
+	</select>
+	
+	<delete id="deletePost" parameterType="string">
+		delete from post where postNo = #{postNo}
+	</delete>
+	
+	<delete id="deleteScrap" parameterType="string">
+		delete from user_scrap_news where scrapNo = #{scrapNo}
+	</delete>
+	
+	<update id="updatePost" parameterType="Post">
+		update post set name = #{name} where postNo = #{postNo}
+	</update>
+	
+	<update id="updateScrap" parameterType="UserScrapNews">
+		update user_scrap_news set curator_summary = #{curator_summary} where scrapNo = #{scrapNo}
+	</update>
+	
+	<select id="selectUserScrapNews" parameterType="String" resultType="UserScrapNews">
+		select * from user_scrap_news where userNo = #{userNo} order by scrapNo desc;
+	</select>
+	
+	<select id="selectNews" parameterType="String" resultType="News">
+		select * from news where newsNo = #{newsNo};
+	</select>
+
+	<update id="increaseLike" parameterType="String">
+		update user_scrap_news set like_cnt = like_cnt + 1 where scrapNo = #{scrapNo}
+	</update>
+	
+	<update id="increaseDisLike" parameterType="String">
+		update user_scrap_news set dislike_cnt = dislike_cnt + 1 where scrapNo = #{scrapNo}
+	</update>
+	
+	<update id="decreaseLike" parameterType="String">
+		update user_scrap_news set like_cnt = like_cnt - 1 where scrapNo = #{scrapNo}
+	</update>
+	
+	<update id="decreaseDisLike" parameterType="String">
+		update user_scrap_news set dislike_cnt = dislike_cnt - 1 where scrapNo = #{scrapNo}
+	</update>
+	
+	<update id="updateLike" parameterType="UserGoodNews">
+		update user_good_news set is_like = !is_like where scrapNo = #{scrapNo} and userNo = #{userNo};
+	</update>
+	
+	<update id="updateDisLike" parameterType="UserGoodNews">
+		update user_good_news set is_dislike = !is_dislike where scrapNo = #{scrapNo} and userNo = #{userNo};
+	</update>
+	
+	<update id="updateSave" parameterType="UserGoodNews">
+		update user_good_news set is_save = !is_save where scrapNo = #{scrapNo} and userNo = #{userNo};
+	</update>
+
+</mapper>

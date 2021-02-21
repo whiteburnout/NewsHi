@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newha.mapper.UserMapper">
+	
+	<select id="follow" resultType="int">
+		select followUserNo from follow where userNo = #{userNo};
+	</select>
+	
+	<select id="tagList" resultType="String">
+		select name from join_tag where userNo = #{userNo};
+	</select>
+	
+	<select id="selectUser" resultType="User">
+		select * from user where userNo = #{userNo}
+	</select>
+	
+	<select id="selectAllByKeyword" parameterType="String" resultType="User">
+		select * from user where name like #{keyword}
+	</select>
+
+	<select id="selectId" resultType="int">
+		select count(*) from user where id = #{id}
+	</select>
+	
+	<select id="selectName" resultType="int">
+		select count(*) from user where name = #{name}
+	</select>
+	
+	<select id="selectUserByTag" parameterType="String" resultType="User">
+		select * from user where userNo in (select userNo from user_scrap_news where scrapNo in(
+				select scrapNo from post_tag where tagNo in(
+				select tagNo from hashtag where name in(
+				select name from join_tag where userNo = #{userNo}))));
+	</select>
+	
+	<select id="userNo" resultType="int">
+		select userNo from user where id = #{id}
+	</select>
+	
+	<select id="selectJoinTagByuserNo" parameterType="string" resultType="String">
+		select name from join_tag where userNo = #{userNo}
+	</select>
+	
+	<insert id="insertTag" parameterType="string">
+		insert into join_tag values ( ( select userNo from user where id = #{id} ), #{tag} );
+	</insert>
+	
+	<insert id="insert" parameterType="User">
+		insert into user values(null,#{name},#{password},null,#{id},#{platformType})
+	</insert>
+
+	<insert id="socialInsert" parameterType="User">
+		insert into user values(null,#{name},#{password},#{thumbnail_path},#{id},#{platformType})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		delete from user where id = #{id}
+	</delete>
+	
+	<delete id="tagDelete" parameterType="int">
+		delete from join_tag where userNo = #{userNo}
+	</delete>
+	
+	<select id="selectOne" resultType="User">
+		select * from user where id = #{id} and password = #{password}
+	</select>
+	
+	<select id="socialLogin" resultType="User">
+		select * from user where id = #{id}
+	</select>
+	
+	<select id="selectOneById" parameterType="string" resultType="User">
+		select * from user where id = #{id}
+	</select>
+
+	<update id="update" parameterType="string">
+		update user set password = #{password}, thumbnail_path = #{thumbnail_path} where id = #{id};
+	</update>
+	
+	<update id="updatePassword" parameterType="string">
+		update user set password = #{newpassword} where id = #{id} and password = #{oldpassword};
+	</update>
+	
+	<update id="changePassword" parameterType="string">
+		update user set password = #{password} where id = #{id};
+	</update>
+	
+	<update id="updateName" parameterType="string">
+		update user set name = #{name} where id = #{id};
+	</update>
+	
+	<update id="thumbnailPath" parameterType="String">
+		update user set thumbnail_path = #{thumbnail_path} where userNo = #{userNo};
+	</update>
+	
+	<insert id="subscribe" parameterType="string">
+		insert into follow values ( ( select userNo from user where id = #{id} ), ( select userNo from user where id = #{id2} ) );
+	</insert>
+	
+	<insert id="subscdelete" parameterType="string">
+		delete from follow where userNo = (select userNo from user where id = #{id}) and followUserNo = (select userNo from user where id = #{id2});
+	</insert>
+	
+</mapper>
