@@ -133,8 +133,7 @@ $ yarn serve
 ### 뉴스피드
 
 - 로그인
-
-![메인페이지](\images\메인페이지.PNG)
+<img src="./images/메인페이지.PNG"></img>
 
 
 
@@ -144,36 +143,28 @@ $ yarn serve
 
 
 
-![메인페이지2](\images\메인페이지2.PNG)
+<img src="./images/메인페이지2.PNG"></img>
 
 ### 포스트
-
-![기사1](\images\기사1.PNG)
-
-![기사2](\images\기사2.PNG)
+<img src="./images/기사1.PNG"></img>
+<img src="./images/기사2.PNG"></img>
 
 ### 다크모드
-
-![기사4](\images\기사4.PNG)
+<img src="./images/기사4.PNG"></img>
 
 ### 마이페이지
-
-![마이페이지](\images\마이페이지.PNG)
+<img src="./images/마이페이지.PNG"></img>
 
 ### 입력
-
-![입력페이지](\images\입력페이지.PNG)
+<img src="./images/입력페이지.PNG"></img>
 
 ### 채널
-
-![채널1](\images\채널1.PNG)
-
-![채널3](\images\채널3.PNG)
+<img src="./images/채널1.PNG"></img>
+<img src="./images/채널3.PNG"></img>
 
 ### 검색
 
-![검색1](\images\검색1.PNG)
-
-![검색2](\images\검색2.PNG)
+<img src="./images/검색1.PNG"></img>
+<img src="./images/검색2.PNG"></img>
 
 ---
