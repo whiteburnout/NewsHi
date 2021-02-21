@@ -134,6 +134,8 @@ $ yarn serve
 
 - 로그인
 
+  > 큐레이터 추천기능과 구독중인 큐레이터의 포스트
+
 <img src="./images/메인페이지.PNG"></img>
 
 ---
@@ -146,6 +148,7 @@ $ yarn serve
 ---
 
 ### 포스트
+> 본문, 요약된 기사, 큐레이터 의견
 <img src="./images/기사1.PNG"></img>
 ---
 <img src="./images/기사2.PNG"></img>
