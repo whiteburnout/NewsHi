@@ -143,27 +143,36 @@ $ yarn serve
   > 최신순으로 등록된 기사를 보여줌
   
 <img src="./images/메인페이지2.PNG"></img>
+---
 
 ### 포스트
 <img src="./images/기사1.PNG"></img>
+---
 <img src="./images/기사2.PNG"></img>
+---
 
 ### 다크모드
 <img src="./images/기사4.PNG"></img>
+---
 
 ### 마이페이지
 <img src="./images/마이페이지.PNG"></img>
+---
 
 ### 입력
 <img src="./images/입력페이지.PNG"></img>
+---
 
 ### 채널
 <img src="./images/채널1.PNG"></img>
+---
 <img src="./images/채널3.PNG"></img>
+---
 
 ### 검색
 
 <img src="./images/검색1.PNG"></img>
+---
 <img src="./images/검색2.PNG"></img>
 
 ---
