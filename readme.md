@@ -165,12 +165,12 @@ $ yarn serve
 <img src="./images/기사4.PNG"></img>
 ---
 
-### 마이페이지
-<img src="./images/마이페이지.PNG"></img>
+### 포스트 입력
+<img src="./images/입력페이지.PNG"></img>
 ---
 
-### 입력
-<img src="./images/입력페이지.PNG"></img>
+### 마이페이지
+<img src="./images/마이페이지.PNG"></img>
 ---
 
 ### 채널
