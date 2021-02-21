@@ -38,7 +38,7 @@
 
 ## ⚙️ 개발환경
 
-<img src="./images/기술스택.png"></img>
+<img src="./images/기술스택.PNG"></img>
 
 ## 📜개발기록
 
