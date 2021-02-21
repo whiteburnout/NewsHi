@@ -136,7 +136,7 @@ $ yarn serve
 
 <img src="./images/메인페이지.PNG"></img>
 
-
+---
 
 - 비로그인
 
